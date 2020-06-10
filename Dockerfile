@@ -19,6 +19,7 @@ COPY . /site
 WORKDIR /site
 
 # And then we just run Hugo
+RUN ls
 RUN /hugo --minify --enableGitInfo
 
 # stage 2
