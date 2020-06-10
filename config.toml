@@ -2,4 +2,3 @@ baseURL = "http://example.org/"
 languageCode = "en-us"
 title = "APM tips"
 theme = "Hugo-Octopress"
-enableGitInfo = false

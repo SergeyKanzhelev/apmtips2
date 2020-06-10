@@ -15,7 +15,6 @@ RUN /hugo version
 RUN apk add --no-cache git
 
 # The source files are copied to /site
-RUN ls -a
 COPY . /site
 WORKDIR /site
 
