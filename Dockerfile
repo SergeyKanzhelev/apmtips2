@@ -20,7 +20,8 @@ WORKDIR /site
 
 # And then we just run Hugo
 RUN ls -a
-RUN /hugo --minify --enableGitInfo
+# RUN /hugo --minify --enableGitInfo
+RUN /hugo --minify
 
 # stage 2
 FROM nginx:1.15-alpine
