@@ -24,6 +24,7 @@ RUN ls -la
 RUN /hugo -v --minify
 RUN ls -la
 RUN ls public -la
+RUN ls themes -la
 
 # stage 2
 FROM nginx:1.15-alpine
