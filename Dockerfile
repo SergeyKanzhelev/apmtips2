@@ -21,7 +21,7 @@ WORKDIR /site
 # And then we just run Hugo
 RUN ls -la
 # RUN /hugo --minify --enableGitInfo
-RUN /hugo --minify
+RUN /hugo -v --minify
 RUN ls -la
 RUN ls public -la
 
