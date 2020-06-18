@@ -1,4 +1,16 @@
 steps:
+# checkout git submodules
+- name: 'gcr.io/cloud-builders/git'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    git init
+    git remote add origin git@github.com:/SergeyKanzhelev/$REPO_NAME.git
+    git fetch --depth=1 origin $COMMIT_SHA
+    git reset --hard FETCH_HEAD
+    git config -f .gitmodules submodule.core.url git@github.com:/SergeyKanzhelev/$REPO_NAME.git
+    git submodule update --init
 - name: gcr.io/cloud-builders/docker
   args: ['build', '-t', 'gcr.io/$PROJECT_ID/code', '.']
 images: ['gcr.io/$PROJECT_ID/code']
