@@ -11,5 +11,30 @@ steps:
     git reset --hard FETCH_HEAD
     git submodule update --init --recursive
 - name: gcr.io/cloud-builders/docker
-  args: ['build', '-t', 'gcr.io/$PROJECT_ID/code', '.']
-images: ['gcr.io/$PROJECT_ID/code']
+  args: [
+    'build', '-t', 'gcr.io/$PROJECT_ID/apmtips:$BRANCH_NAME-$COMMIT_SHA',
+    'build', '-t', 'gcr.io/$PROJECT_ID/apmtips:latest', 
+    '.']
+
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: ['apply', '-f', 'k8s/']
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=main'
+
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: [
+    'set', 
+    'image', 
+    'deployment', 
+    'apmtips', 
+    'apmtips=gcr.io/$PROJECT_ID/apmtips:$BRANCH_NAME-$COMMIT_SHA'
+  ]
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=main'
+
+images: [
+    'gcr.io/$PROJECT_ID/apmtips:$BRANCH_NAME-$COMMIT_SHA',
+    'gcr.io/$PROJECT_ID/apmtips:latest'
+   ]
